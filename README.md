@@ -1,8 +1,9 @@
 Event listener
 ==============
 
-If you want know what extensions do you have, install this extension and 
-use one file "lestener" for add something on events
+If you want know what events do you have, install this extension and 
+use file "listener" for add some events. You always will know
+that event you have and that class has assigned
 
 Installation
 ------------
@@ -26,8 +27,8 @@ or add
 "yiicod/listener": "*"
 ```
 
-Config ( This is all config for extensions )
----------------------------------------------
+Config ( This is all config for extension )
+-------------------------------------------
 
 ```php
 'bootstrap' => ['eventManager'],
