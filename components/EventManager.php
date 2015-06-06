@@ -35,20 +35,11 @@ class EventManager extends Component
     {
         parent::init();
 
-//        $listeners = false;
-//        if (false === is_null(Yii::$app->{$this->cacheId}) && $this->cachingDuration > 0) {
-//            $listeners = Yii::$app->cache->get(trim(str_replace('\\', '_', __CLASS__), '_'));
-//        }
-//        if (false === $listeners) {
         $listeners = Yii::getAlias($this->listenersAlias) . '.php';
         if (!file_exists($listeners)) {
             throw new Exception($listeners . '.php file requered and must be return array!');
         }
         $listeners = include_once $listeners;
-//            if (false === is_null(Yii::$app->{$this->cacheId})) {
-//                Yii::$app->{$this->cacheId}->set(trim(str_replace('\\', '_', __CLASS__), '_'), $listeners, $this->cachingDuration);
-//            }
-//        }
 
         foreach ($listeners as $key => $listener) {
             $global = true;
