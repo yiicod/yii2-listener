@@ -17,13 +17,13 @@ class EventManager extends Component
     public $listenersAlias = '@app/config/listeners';
 
     /**
-     *
+     * Not implement yet
      * @var type 
      */
     public $cacheId = 'cache';
 
     /**
-     *
+     * Not implement yet
      * @var type 
      */
     public $cachingDuration = 0;
