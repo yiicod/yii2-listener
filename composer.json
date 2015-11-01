@@ -1,5 +1,6 @@
 {
     "name": "yiicod/yii2-listener",
+    "description": "The simple and powerful listener for the Yii2 framework",
     "type": "yii-extension",
     "license": "New BSD License",
     "authors": [
