@@ -41,6 +41,16 @@ Config
 For trigger event use default manual http://www.yiiframework.com/doc-2.0/guide-concept-events.html
 Global Events or Class-Level Event Handlers(Individual)
 
+Example how you can trigger global event
+----------------------------------------
+ ```php
+
+Yii::$app->trigger('app.controller.actionSignup.success', new yiicod\listener\components\DataEvent(new ExampleClass, ['key' => 'value']]));
+
+```
+If you want you can use default class Event. 
+
+
 Example listener.php 
 --------------------
  ```php
