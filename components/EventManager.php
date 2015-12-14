@@ -23,7 +23,7 @@ class EventManager extends Component
     {
         parent::init();
 
-        foreach ($listeners as $event => $listener) {
+        foreach ($this->listeners as $event => $listener) {
             foreach ($listener as $handler) {
                 if (true === is_array($handler) && false === is_object($handler[0]) && false === class_exists($handler[0])) {
                     $handler = function() use ($handler) {
