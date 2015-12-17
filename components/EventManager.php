@@ -11,22 +11,10 @@ class EventManager extends Component
 {
 
     /**
-     * Liastener php file
-     * @var string
+     * Listeners
+     * @var array
      */
-    public $listenersAlias = '@app/config/listeners';
-
-    /**
-     * Not implement yet
-     * @var type 
-     */
-    public $cacheId = 'cache';
-
-    /**
-     * Not implement yet
-     * @var type 
-     */
-    public $cachingDuration = 0;
+    public $listeners = [];
 
     /**
      * Init component
@@ -35,31 +23,39 @@ class EventManager extends Component
     {
         parent::init();
 
-        $listeners = Yii::getAlias($this->listenersAlias) . '.php';
-        if (!file_exists($listeners)) {
-            throw new Exception($listeners . '.php file requered and must be return array!');
-        }
-        $listeners = include_once $listeners;
-
-        foreach ($listeners as $key => $listener) {
-            $global = true;
-            if (is_array($key)) {
-                $global = false;
+        foreach ($this->listeners as $event => $listener) {
+            if (is_callable($listener)) {
+                // do nothing
             }
-            foreach ($listener as $objects) {
-                if (true === is_array($objects) && false === is_object($objects[0]) && false === class_exists($objects[0])) {
-                    $objects = function() use ($objects) {
-                        $component = eval('return ' . $objects[0] . ';');
-                        call_user_func_array(array($component, $objects[1]), func_get_args());
-                    };
-                }
-                if ($global) {
-                    Yii::$app->on($key, $objects);
-                } else {
-                    Event::on($key[0], $key[1], $objects);
+            else if (is_array($listener)) {
+                foreach ($listener as $handler) {
+                    if (is_array($handler)) {
+                        if (false === is_object($handler[0]) && false === class_exists($handler[0])) {
+                            $handler = function() use ($handler) {
+                                $component = eval('return ' . $handler[0] . ';');
+                                call_user_func_array(array($component, $handler[1]), func_get_args());
+                            };
+                        }
+                    }
                 }
             }
+            $this->attachListener($event, $listener);
         }
     }
 
+    private function attachListener($event, $listener)
+    {
+        if (!is_array($listener)) {
+            $listener   = [$listener];
+        }
+        foreach ($listener as $handler) {
+            if (is_array($event)) {
+                $className  = $event[0];
+                $eventName  = $event[1];
+                Event::on($className, $eventName, $handler);
+            } else {
+                Yii::$app->on($event, $handler);
+            }
+        }
+    }
 }

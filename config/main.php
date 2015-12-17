@@ -3,7 +3,8 @@
 return [
     'components' => [
         'eventManager' => [
-            'class' => 'yiicod\listener\components\EventManager'
+            'class' => 'yiicod\listener\components\EventManager',
+            'events' => [],
         ],
     ]
 ];
