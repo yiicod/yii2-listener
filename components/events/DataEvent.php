@@ -21,18 +21,6 @@ class DataEvent extends Event
     public $params = [];
 
     /**
-     * @var mixed the some additional data.
-     */
-    public $result;
-
-    /**
-     * @var boolean whether to continue running the action. Event handlers of
-     * [[SENDER::EVENT_BEFORE_ACTION]] may set this property to decide whether
-     * to continue running the current action.
-     */
-    public $isValid = true;
-
-    /**
      * Constructor.
      * @param mixed $owner the object associated with this event.
      * @param array $config name-value pairs that will be used to initialize the object properties

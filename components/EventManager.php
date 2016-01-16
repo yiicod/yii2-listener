@@ -14,19 +14,7 @@ class EventManager extends Component
      * Liastener php file
      * @var string
      */
-    public $listenersAlias = '@app/config/listeners';
-
-    /**
-     * Not implement yet
-     * @var type 
-     */
-    public $cacheId = 'cache';
-
-    /**
-     * Not implement yet
-     * @var type 
-     */
-    public $cachingDuration = 0;
+    public $listeners = '@app/config/listeners';
 
     /**
      * Init component
@@ -35,17 +23,15 @@ class EventManager extends Component
     {
         parent::init();
 
-        $listeners = Yii::getAlias($this->listenersAlias) . '.php';
-        if (!file_exists($listeners)) {
-            throw new Exception($listeners . '.php file requered and must be return array!');
+        if (is_string($this->listeners)) {
+            $listeners = include_once Yii::getAlias($this->listeners) . '.php';
+        } elseif (is_array($this->listeners)) {
+            $listeners = $this->listeners;
+        } else {
+            throw new Exception('Create ' . $this->listeners . '.php file or set array, it is requered! $listeners have to get array!');
         }
-        $listeners = include_once $listeners;
 
         foreach ($listeners as $key => $listener) {
-            $global = true;
-            if (is_array($key)) {
-                $global = false;
-            }
             foreach ($listener as $objects) {
                 if (true === is_array($objects) && false === is_object($objects[0]) && false === class_exists($objects[0])) {
                     $objects = function() use ($objects) {
@@ -53,7 +39,8 @@ class EventManager extends Component
                         call_user_func_array(array($component, $objects[1]), func_get_args());
                     };
                 }
-                if ($global) {
+                if (is_array($key)) {
+                    //Global event
                     Yii::$app->on($key, $objects);
                 } else {
                     Event::on($key[0], $key[1], $objects);
