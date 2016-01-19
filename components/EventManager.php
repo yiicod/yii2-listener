@@ -39,7 +39,7 @@ class EventManager extends Component
                         call_user_func_array(array($component, $objects[1]), func_get_args());
                     };
                 }
-                if (is_array($key)) {
+                if (!is_array($key)) {
                     //Global event
                     Yii::$app->on($key, $objects);
                 } else {
