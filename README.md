@@ -24,7 +24,7 @@ php composer.phar require --prefer-dist yiicod/yii2-listener "*"
 or add
 
 ```json
-"yiicod/listener": "*"
+"yii2-listener": "*"
 ```
 
 Config
