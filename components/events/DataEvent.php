@@ -7,22 +7,24 @@ use yii\base\Object;
 
 class DataEvent extends Event
 {
-
     /**
      * Owner object
-     * @var Object 
+     *
+     * @var object
      */
     public $owner = null;
 
     /**
      * Additional data for event
+     *
      * @var []
      */
     public $params = [];
 
     /**
      * Constructor.
-     * @param mixed $owner the object associated with this event.
+     *
+     * @param mixed $owner the object associated with this event
      * @param array $config name-value pairs that will be used to initialize the object properties
      */
     public function __construct($owner, $config = [])
@@ -30,5 +32,4 @@ class DataEvent extends Event
         $this->owner = $owner;
         parent::__construct($config);
     }
-
 }

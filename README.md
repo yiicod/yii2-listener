@@ -1,73 +1,107 @@
-Event listener
-==============
+Event listener manager
+======================
 
-If you want know what events do you have, install this extension and 
-use file "listener" for add some events. You always will know
-that event you have and that class has assigned
+Provides listener logic. 
+Command parses chosen paths to find all listener/subscribers (depends on ListenerInterface and SubscriberInterface implementation).
+Where listener can be used for single event and subscriber can be used for bunch of events.
 
 Installation
 ------------
-```json
-"repositories": [
-    {
-        "type": "git",
-        "url": "https://github.com/yiicod/yii2-listener.git"
-    }  
-],
-```
 Either run
-
 ```
 php composer.phar require --prefer-dist yiicod/yii2-listener "*"
 ```
 
 or add
-
 ```json
 "yii2-listener": "*"
 ```
+to your composer.json file
 
-Config
-------
-
+Web config 
+----------
 ```php
-'bootstrap' => ['eventManager'],
+'bootstrap' => ['listener'],
 'components' => [
-        'eventManager' => [
-            'class' => 'yiicod\listener\components\EventManager'
-        ],
+    'listener' => [
+        'class' => 'yiicod\listener\components\Listener'
+    ],
 ]
 ```
-For trigger event use default manual http://www.yiiframework.com/doc-2.0/guide-concept-events.html
-Global Events or Class-Level Event Handlers(Individual)
 
-Example how you can trigger global event
-----------------------------------------
- ```php
-
-Yii::$app->trigger('app.controller.actionSignup.success', new yiicod\listener\components\DataEvent(new ExampleClass, ['key' => 'value']]));
-
+Console config
+--------------
+```php
+'controllerMap' => [
+    'listener' => [
+        'class' => \yiicod\listener\commands\Listener::class
+    ],
+]
 ```
-If you want you can use default class Event. 
 
+For trigger event use yii manual:
+http://www.yiiframework.com/doc-2.0/guide-concept-events.html#class-level-event-handlers
 
-Example listener.php 
---------------------
+Listener usage
+--------------
  ```php
-    return [
-        //Individual event
-        array(ActiveRecord::className(), ActiveRecord::EVENT_AFTER_INSERT) => [
-            function ($event) {
-                Yii::trace(get_class($event->sender) . ' is inserted');
-            },
-            ['Yii::$app->myComponent', 'helloWord'],
-        ],
-        //global event (like namespace)
-        'app.controller.actionSignup.success' => [
-            function ($event) {
-                Yii::trace(get_class($event->sender) . ' is inserted');
-            },
-            ['Yii::$app->myComponent', 'helloWord'],
-        ]
-    ]
+namespace frontend\observers\listeners;
+
+use yii\db\ActiveRecord;
+use yiicod\listener\components\listeners\ListenerAbstract;
+
+class TestListener extends ListenerAbstract
+{
+    /**
+     * Call on event method
+     */
+    public function handle($event)
+    {
+        // TODO: Implement handle() method.
+    }
+
+    /**
+     * Return event name for emit
+     * @return string
+     */
+    public static function event(): string
+    {
+        return ActiveRecord::class . '@' . ActiveRecord::EVENT_AFTER_FIND;
+    }
+}
+ ```
+
+Usage subscriber
+----------------
+ ```php
+namespace frontend\observers\subscribers;
+
+use yii\db\ActiveRecord;
+use yiicod\listener\components\listeners\SubscriberAbstract;
+
+class TestSubscriber extends SubscriberAbstract
+{
+    /**
+     * @return array
+     * [
+     *      'event_class@event1' => 'on'
+     *      'event_class@event2' => 'on'
+     * ]
+     */
+    public static function subscribe(): array
+    {
+        return [
+            ActiveRecord::class . '@' . ActiveRecord::EVENT_BEFORE_INSERT => 'on',
+            ActiveRecord::class . '@' . ActiveRecord::EVENT_AFTER_INSERT => 'on'
+        ];
+    }
+
+    /**
+     * Call on event method
+     */
+    public function on($event)
+    {
+        // Handle
+    }
+}
  ```

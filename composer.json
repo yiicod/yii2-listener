@@ -1,7 +1,7 @@
 {
     "name": "yiicod/yii2-listener",
-    "description": "The simple and powerful listener for the Yii2 framework",
-    "type": "yii-extension",
+    "description": "The simple and powerful event listener for the Yii2 framework",
+    "type": "yii2-extension",
     "license": "New BSD License",
     "authors": [
         {
@@ -10,6 +10,10 @@
             "role": "Developer"
         }
     ],
+    "require": {
+        "yiisoft/yii2": "*",
+        "symfony/finder": "3.*"
+    },
     "autoload": {
         "psr-4": {
             "yiicod\\listener\\": ""
