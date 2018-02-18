@@ -1,12 +1,13 @@
-Event listener manager
-======================
+Yii Event listener manager
+==========================
+
+[![Latest Stable Version](https://poser.pugx.org/yiicod/yii2-listener/v/stable)](https://packagist.org/packages/yiicod/yii2-listener) [![Total Downloads](https://poser.pugx.org/yiicod/yii2-listener/downloads)](https://packagist.org/packages/yiicod/yii2-listener) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiicod/yii2-listener/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiicod/yii2-listener/?branch=master)[![Code Climate](https://codeclimate.com/github/yiicod/yii2-listener/badges/gpa.svg)](https://codeclimate.com/github/yiicod/yii2-listener)
 
 Provides listener logic. 
 Command parses chosen paths to find all listener/subscribers (depends on ListenerInterface and SubscriberInterface implementation).
 Where listener can be used for single event and subscriber can be used for bunch of events.
 
-Installation
-------------
+#### Installation
 Either run
 ```
 php composer.phar require --prefer-dist yiicod/yii2-listener "*"
@@ -18,8 +19,7 @@ or add
 ```
 to your composer.json file
 
-Web config 
-----------
+#### Web config 
 ```php
 'bootstrap' => ['listener'],
 'components' => [
@@ -29,8 +29,7 @@ Web config
 ]
 ```
 
-Console config
---------------
+#### Console config
 ```php
 'controllerMap' => [
     'listener' => [
@@ -38,12 +37,16 @@ Console config
     ],
 ]
 ```
+Run command. This command will warm and prepare all listeners and subscriptions. Run this command each time when you create
+new Listener or Subscription.
+```bash
+listener/parse
+```
 
 For trigger event use yii manual:
 http://www.yiiframework.com/doc-2.0/guide-concept-events.html#class-level-event-handlers
 
-Listener usage
---------------
+#### Listener usage
  ```php
 namespace frontend\observers\listeners;
 
@@ -71,8 +74,7 @@ class TestListener extends ListenerAbstract
 }
  ```
 
-Usage subscriber
-----------------
+#### Usage subscriber
  ```php
 namespace frontend\observers\subscribers;
 

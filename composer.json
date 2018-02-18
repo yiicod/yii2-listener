@@ -2,7 +2,7 @@
     "name": "yiicod/yii2-listener",
     "description": "The simple and powerful event listener for the Yii2 framework",
     "type": "yii2-extension",
-    "license": "New BSD License",
+    "license": "MIT",
     "authors": [
         {
             "name": "Alexey Orlov",
@@ -11,9 +11,18 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "*",
-        "symfony/finder": "3.*"
+        "yiisoft/yii2": "2.*",
+        "symfony/finder": "~3.0|~4.0"
     },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "~2.1"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "yiicod\\listener\\": ""

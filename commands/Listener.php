@@ -59,7 +59,7 @@ class Listener extends Controller
                 $percent += $step;
                 $this->progress($percent);
 
-                if (strpos(file_get_contents($file->getPathname()), sprintf('class %s', $file->getBasename('.php'))) === false) {
+                if (false === strpos(file_get_contents($file->getPathname()), sprintf('class %s', $file->getBasename('.php')))) {
                     continue;
                 }
 
