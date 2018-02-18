@@ -26,9 +26,6 @@ class Listener extends Component implements BootstrapInterface
 
     public function init()
     {
-        parent::init();
-
-        Yii::beginProfile('Assign-events', __METHOD__);
         $events = [];
         static::$_events = [];
         foreach ($this->eventAliases as $alias) {
@@ -36,9 +33,7 @@ class Listener extends Component implements BootstrapInterface
                 $events = ArrayHelper::merge($events, include(Yii::getAlias($alias)));
             }
         }
-
         ksort($events);
-
         foreach ($events as $priority => $keys) {
             foreach ($keys as $event => $listeners) {
                 foreach ($listeners as $handler) {
@@ -50,8 +45,6 @@ class Listener extends Component implements BootstrapInterface
                 }
             }
         }
-
-        Yii::endProfile('Assign-events', __METHOD__);
     }
 
     /**
