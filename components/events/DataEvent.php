@@ -3,14 +3,14 @@
 namespace yiicod\listener\components\events;
 
 use yii\base\Event;
-use yii\base\Object;
+use yii\base\BaseObject;
 
 class DataEvent extends Event
 {
     /**
      * Owner object
      *
-     * @var object
+     * @var BaseObject
      */
     public $owner = null;
 
